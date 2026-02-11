@@ -6,9 +6,13 @@ from sqlalchemy import create_engine
 import os
 from dotenv import load_dotenv
 from models import Base
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 load_dotenv()
-#cors
+
+app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -16,23 +20,19 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app = FastAPI()
 
 app.include_router(user_router)
 app.include_router(ai_response_router)
 app.include_router(email_router)
-#to create database
 
 DATABASE_URL = os.getenv("DATABASE_URL")
-engine=create_engine(DATABASE_URL)
-Base.metadata.create_all(engine)
+if DATABASE_URL:
+    engine = create_engine(DATABASE_URL)
+    Base.metadata.create_all(engine)
 
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
-
-
-
 
 if __name__ == "__main__":
     import uvicorn
