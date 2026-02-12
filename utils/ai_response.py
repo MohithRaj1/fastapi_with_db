@@ -25,11 +25,15 @@ def get_completion(user_message, system_message="You are a helpful assistant."):
     Returns:
         The model's response
     """
-    response = client.complete(
-        messages=[
-            SystemMessage(system_message),
-            UserMessage(user_message),
-        ],
-        model=model
-    )
-    return response.choices[0].message.content
+    try:
+        response = client.complete(
+            messages=[
+                SystemMessage(content=system_message),
+                UserMessage(content=user_message),
+            ],
+            model=model
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        print(f"Error in get_completion: {e}")
+        raise

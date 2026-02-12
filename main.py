@@ -1,15 +1,15 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import FastAPI
 from routes.user_routes import router as user_router
 from routes.ai_response_routes import router as ai_response_router
 from routes.email_routes import router as email_router
 from sqlalchemy import create_engine
 import os
-from dotenv import load_dotenv
 from models import Base
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-
-load_dotenv()
 
 app = FastAPI()
 
@@ -36,4 +36,4 @@ def read_root():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
