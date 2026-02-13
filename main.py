@@ -4,16 +4,7 @@ import sys
 # Ensure the project root is in the Python path
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 if ROOT_DIR not in sys.path:
-    sys.path.insert(0, ROOT_DIR) # Use insert(0) to prioritize
-
-print(f"CWD: {os.getcwd()}")
-print(f"ROOT_DIR: {ROOT_DIR}")
-print(f"sys.path: {sys.path}")
-try:
-    print(f"Files in root: {os.listdir(ROOT_DIR)}")
-    print(f"Files in schemas/: {os.listdir(os.path.join(ROOT_DIR, 'schemas'))}")
-except Exception as e:
-    print(f"Diagnostic error: {e}")
+    sys.path.insert(0, ROOT_DIR)
 
 from dotenv import load_dotenv
 load_dotenv()
